@@ -11,18 +11,16 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { useState } from "react";
 import { colors } from "../styles/styles";
-import Icon from "react-native-vector-icons/AntDesign";
 import Input from "../components/Input";
+import { useState } from "react";
 import Button from "../components/Button";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
-const RegistrationScreen = () => {
+const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login, setLogin] = useState("");
   const [secure, setSecure] = useState(true);
 
   const handleEmailChange = value => {
@@ -31,21 +29,17 @@ const RegistrationScreen = () => {
   const handlePasswordChange = value => {
     setPassword(value);
   };
-  const handleLoginChange = value => {
-    setLogin(value);
-  };
 
   const handleSubmit = () => {
     if (!email || !password) {
       Alert.alert("Заповніть всі поля!");
       return;
     }
-    console.log(`Login: ${login}\nemail: ${email}\npassword: ${password}`);
-    Alert.alert("Реєстрація успішна!");
+    console.log(`email: ${email}\npassword: ${password}`);
+    Alert.alert("Авторизація успішна!");
     Keyboard.dismiss();
     setEmail("");
     setPassword("");
-    setLogin("");
     setSecure(true);
   };
 
@@ -64,17 +58,9 @@ const RegistrationScreen = () => {
         <Image source={require("../assets/heroimg.jpg")} style={styles.image} resizeMode="cover" />
 
         <View style={styles.formContainer}>
-          <View style={styles.avatarWrapper}>
-            <TouchableOpacity style={styles.addButton}>
-              <Icon name="plus" size={16} style={styles.addButtonIcon} />
-            </TouchableOpacity>
-          </View>
-
-          <Text style={styles.title}>Реєстрація</Text>
+          <Text style={styles.title}>Увійти</Text>
 
           <View style={[styles.innerContainer, styles.inputContainer]}>
-            <Input placeholder="Логін" value={login} onChangeText={handleLoginChange} />
-
             <Input
               placeholder="Адреса електронної пошти"
               value={email}
@@ -83,23 +69,23 @@ const RegistrationScreen = () => {
 
             <Input
               placeholder="Пароль"
-              value={password}
-              onChangeText={handlePasswordChange}
               rightButton={showButton}
               outerStyles={styles.passwordButton}
+              value={password}
+              onChangeText={handlePasswordChange}
               isSecure={secure}
             />
           </View>
 
           <View style={[styles.innerContainer, styles.buttonContainer]}>
             <Button onPress={handleSubmit}>
-              <Text style={styles.loginButtonText}>Зареєструватися</Text>
+              <Text style={styles.loginButtonText}>Увійти</Text>
             </Button>
 
             <View style={styles.signUpContainer}>
-              <Text style={styles.signUpText}>Вже є акаунт? </Text>
+              <Text style={styles.signUpText}>Немає акаунту? </Text>
               <TouchableOpacity>
-                <Text style={[styles.signUpText, styles.signUpRef]}>Увійти</Text>
+                <Text style={[styles.signUpText, styles.signUpRef]}>Зареєструватися</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -127,12 +113,12 @@ const styles = StyleSheet.create({
   },
 
   formContainer: {
-    position: "absolute",
     paddingHorizontal: 16,
-    paddingTop: 92,
+    paddingTop: 32,
+    position: "absolute",
     bottom: 0,
     width: SCREEN_WIDTH,
-    height: "70%",
+    height: "60%",
     backgroundColor: colors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
@@ -186,35 +172,6 @@ const styles = StyleSheet.create({
   signUpRef: {
     textDecorationLine: "underline",
   },
-
-  avatarWrapper: {
-    position: "absolute",
-    top: -60,
-    left: "50%",
-    transform: [{ translateX: -50 }, { translateY: 0 }],
-    width: 120,
-    height: 120,
-    backgroundColor: colors.light_gray,
-    borderRadius: 16,
-  },
-
-  addButton: {
-    position: "absolute",
-    bottom: 14,
-    right: 0,
-    transform: [{ translateX: 12.5 }],
-    width: 25,
-    height: 25,
-
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 100,
-    backgroundColor: colors.white,
-    borderColor: colors.orange,
-    borderWidth: 1,
-  },
-
-  addButtonIcon: { color: colors.orange },
 });
 
-export default RegistrationScreen;
+export default LoginScreen;
